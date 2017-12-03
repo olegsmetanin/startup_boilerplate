@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package serviceproto;
+
+
+  message StringMessage {
+    string value = 1;
+  }
+
+  service EchoService {
+    rpc Echo(StringMessage) returns (StringMessage) {
+  }
+
+}
