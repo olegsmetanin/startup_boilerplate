@@ -12,7 +12,7 @@ import (
 // PrimitiveHandler of service
 func PrimitiveHandler(w http.ResponseWriter, r *http.Request) {
 	// Response
-	w.Write([]byte("This is api"))
+	w.Write([]byte("This is site"))
 	w.Write([]byte(common.Fn1()))
 }
 
@@ -24,6 +24,9 @@ func getEnv(key, fallback string) string {
 }
 
 func main() {
+
+	log.Println("Hello site")
+
 	r := mux.NewRouter()
 	// Base path for api
 	basePath := getEnv("URL_BASE_PATH", "/")

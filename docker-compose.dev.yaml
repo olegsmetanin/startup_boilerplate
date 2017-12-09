@@ -5,26 +5,16 @@ services:
     image: dockercloud/haproxy
     links:
       - site
+      - api
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 8080:80
-
-  site:
-    image: golang:1.9.2-stretch
-    volumes:
-      - .:/go/src/github.com/olegsmetanin/startup_boilerplate
-    working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./site.dev.sh
-    expose:
-      - "8080"
-    environment:
-      - URL_BASE_PATH=/api
-    depends_on:
-      - "api"
+      - 8081:8081
+      - 8082:8082
 
   api:
-    image: golang:1.9.2-stretch
+    image: olegsmetanin/alpine-inotify:3.4
     volumes:
       - .:/go/src/github.com/olegsmetanin/startup_boilerplate
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
@@ -32,30 +22,29 @@ services:
     expose:
       - "8081"
       - "8082"
-    ports:
-      - 8081:8081
-      - 8082:8082
     environment:
-      - URL_BASE_PATH=/api
+      - TCP_PORTS=8081,8082
     depends_on:
-      - "protowatcher"
+      - "builder"
 
-  #front:
-    #image: node:9.2.0-alpine
-    #working_dir: /home/node/front
-    #environment:
-      #- NODE_ENV=development
-    #volumes:
-      #- ./front:/home/node/front
-    #expose:
-      #- "8080"
-    #command: sh ./dev.sh
-
-  protowatcher:
-    build: protowatcher
+  site:
+    image: olegsmetanin/alpine-inotify:3.4
     volumes:
       - .:/go/src/github.com/olegsmetanin/startup_boilerplate
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./protowatch.dev.sh
+    command: sh ./site.dev.sh
+    expose:
+      - "8080"
+    environment:
+      - URL_BASE_PATH=/site
+    depends_on:
+      - "builder"
+
+  builder:
+    build: builder
+    volumes:
+      - .:/go/src/github.com/olegsmetanin/startup_boilerplate
+    working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
+    command: sh ./builder.dev.sh
 
 # Other services

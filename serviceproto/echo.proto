@@ -2,13 +2,14 @@ syntax = "proto3";
 
 package serviceproto;
 
-
   message StringMessage {
     string value = 1;
   }
 
-  service EchoService {
+  service EchoService { 
+
     rpc Echo(StringMessage) returns (StringMessage) {
+    }
+
   }
 
-}

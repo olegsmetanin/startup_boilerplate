@@ -15,3 +15,14 @@
 # Auto-generated tag files
 tags
 
+/bin/*
+
+vendor
+
+/serviceproto/*
+!/serviceproto/*.proto
+
+front/serviceproto
+
+tags
+

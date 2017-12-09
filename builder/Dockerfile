@@ -8,6 +8,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 RUN apt-get install -y --no-install-recommends unzip
 
+RUN apt-get install -y musl-tools
+
+RUN apt-get install -y inotify-tools
+
 RUN curl -OL https://github.com/google/protobuf/releases/download/v3.3.0/$PROTOC_ZIP \
   && unzip -o $PROTOC_ZIP -d /usr/local bin/protoc \
   && rm -f $PROTOC_ZIP
@@ -19,5 +23,7 @@ RUN curl -sL https://deb.nodesource.com/setup_9.x | bash - \
 
 RUN npm install -g ts-protoc-gen
 
-RUN go get -u github.com/cespare/reflex
+ENV SHELL bash
+
+RUN npm install -g chokidar-cli
 

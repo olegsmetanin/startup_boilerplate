@@ -17,7 +17,8 @@ const webgrpcport = 8082
 
 func main() {
 
-	log.Println("Hello Go")
+	log.Println("Hello api")
+
 	grpcServer := grpc.NewServer()
 
 	sp.RegisterEchoServiceServer(grpcServer, &api.Server{})
