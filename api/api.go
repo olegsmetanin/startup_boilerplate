@@ -1,7 +1,7 @@
 package api
 
 import (
-	sp "github.com/olegsmetanin/startup_boilerplate/serviceproto"
+	sp "github.com/olegsmetanin/startup_boilerplate/serviceproto/go"
 	"golang.org/x/net/context"
 	"log"
 )

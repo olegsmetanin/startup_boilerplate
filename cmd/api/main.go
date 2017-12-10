@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	api "github.com/olegsmetanin/startup_boilerplate/api"
-	sp "github.com/olegsmetanin/startup_boilerplate/serviceproto"
+	sp "github.com/olegsmetanin/startup_boilerplate/serviceproto/go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 	"log"
