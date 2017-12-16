@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
-	api "github.com/olegsmetanin/startup_boilerplate/api"
-	sp "github.com/olegsmetanin/startup_boilerplate/serviceproto/go"
+	api "github.com/olegsmetanin/startup_boilerplate/srv/api"
+	proto "github.com/olegsmetanin/startup_boilerplate/srv/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 	"log"
@@ -21,7 +21,7 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 
-	sp.RegisterEchoServiceServer(grpcServer, &api.Server{})
+	proto.RegisterEchoServiceServer(grpcServer, &api.Server{})
 
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", grpcport))
 	if err != nil {

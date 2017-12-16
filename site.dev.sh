@@ -5,9 +5,7 @@ inotifywait -m ./bin -e create |
         # echo "The file '$file' appeared in directory '$path' via '$action'" 
         if [ $file = "site" ] && [ $action = "CREATE" ]
         then
-            echo "Restart ./bin/site"
-            sleep 1
-            pkill ./bin/site
-            ./bin/site &
+            jobs -p | xargs kill &>/dev/null
+            (sleep 1; echo "Restart ./bin/site"; ./bin/site) &
         fi
     done

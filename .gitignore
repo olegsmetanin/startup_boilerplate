@@ -19,10 +19,5 @@ tags
 
 vendor
 
-/serviceproto/*
-!/serviceproto/*.proto
-
-front/serviceproto
-
 tags
 

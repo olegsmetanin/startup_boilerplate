@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package serviceproto;
+package proto;
 
   message StringMessage {
     string value = 1;

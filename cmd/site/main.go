@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/olegsmetanin/startup_boilerplate/common"
+	"github.com/olegsmetanin/startup_boilerplate/srv/common"
 )
 
 // PrimitiveHandler of service
