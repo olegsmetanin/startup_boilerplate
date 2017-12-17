@@ -1,10 +1,10 @@
 version: '3'
 services:
-
   lb:
     image: dockercloud/haproxy
     links:
       - site
+      - static
       - api
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -22,6 +22,9 @@ services:
     expose:
       - "8081"
       - "8082"
+    #ports:
+      #- 8081:8081
+      #- 8082:8082
     environment:
       - TCP_PORTS=8081,8082
     depends_on:
@@ -35,10 +38,22 @@ services:
     command: sh ./site.dev.sh
     expose:
       - "8080"
+    #ports:
+      #- 8080:8080
     environment:
       - URL_BASE_PATH=/site
+      - VIRTUAL_HOST=*
     depends_on:
       - "builder"
+
+  static:
+    image: nginx:1.13.7-alpine
+    volumes:
+      - ./web/dist:/usr/share/nginx/html
+    expose:
+      - "80"
+    environment:
+      - VIRTUAL_HOST=*/static,*/static/*,*/docs,*/docs/*
 
   builder:
     build: builder

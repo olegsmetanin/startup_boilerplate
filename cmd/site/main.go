@@ -33,6 +33,8 @@ func main() {
 	// Routes consist of a path and a handler function.
 	r.HandleFunc(basePath, PrimitiveHandler)
 
+	//r.PathPrefix("/").Methods("GET").Handler(http.StripPrefix("/", http.FileServer(http.Dir("web/dist/"))))
+
 	// Bind to a port and pass our router in
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
