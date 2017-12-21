@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   lb:
     image: dockercloud/haproxy
     links:
@@ -28,7 +29,7 @@ services:
     environment:
       - TCP_PORTS=8081,8082
     depends_on:
-      - "builder"
+      - "srvbuilder"
 
   site:
     image: olegsmetanin/alpine-inotify:3.4
@@ -44,7 +45,8 @@ services:
       - URL_BASE_PATH=/site
       - VIRTUAL_HOST=*
     depends_on:
-      - "builder"
+      - "srvbuilder"
+      - "webbuilder"  
 
   static:
     image: nginx:1.13.7-alpine
@@ -55,11 +57,20 @@ services:
     environment:
       - VIRTUAL_HOST=*/static,*/static/*,*/docs,*/docs/*
 
-  builder:
-    build: builder
+  srvbuilder:
+    build: srvbuilder
     volumes:
       - .:/go/src/github.com/olegsmetanin/startup_boilerplate
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./builder.dev.sh
+    command: sh ./srvbuilder.dev.sh
+
+
+  webbuilder:
+    build: webbuilder
+    volumes:
+      - .:/go/src/github.com/olegsmetanin/startup_boilerplate
+    working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
+    command: sh ./webbuilder.dev.sh
 
 # Other services
+

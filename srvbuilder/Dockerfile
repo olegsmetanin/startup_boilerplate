@@ -10,6 +10,10 @@ RUN apt-get install -y musl-tools
 
 RUN apt-get install -y inotify-tools
 
+RUN apt-get install -y openjdk-8-jre
+
+RUN wget http://central.maven.org/maven2/io/swagger/swagger-codegen-cli/2.2.3/swagger-codegen-cli-2.2.3.jar -O /tmp/swagger-codegen-cli.jar
+
 ENV PROTOC_ZIP protoc-3.5.0-linux-x86_64.zip
 
 RUN curl -OL https://github.com/google/protobuf/releases/download/v3.5.0/$PROTOC_ZIP \

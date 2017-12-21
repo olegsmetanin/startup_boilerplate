@@ -21,3 +21,10 @@ vendor
 
 tags
 
+node_modules/
+
+/srv/proto/*
+
+/web/dist/*
+
+/web/src/api/*
