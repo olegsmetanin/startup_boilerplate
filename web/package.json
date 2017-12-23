@@ -1,31 +1,41 @@
 {
-  "name": "startup_boilerplate",
-  "version": "0.0.1",
-  "license": "MIT",
-  "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
-    "develop": "webpack --watch --config webpack.config.js",
-    "clean": "rm -r dist/*"
-  },
-  "devDependencies": {
-    "@types/node": "8.5.2",
-    "@types/react": "16.0.31",
-    "@types/react-dom": "16.0.3",
-    "@types/react-transition-group": "2.0.6",
-    "assets-webpack-plugin": "3.5.1",
-    "copy-webpack-plugin": "4.3.0",
-    "cross-env": "5.1.2",
-    "css-loader": "0.28.7",
-    "file-loader": "1.1.6",
-    "lodash": "4.17.4",
-    "moment": "2.20.1",
-    "react": "16.2.0",
-    "react-dom": "16.2.0",
-    "react-router-dom": "4.2.2",
-    "style-loader": "0.19.1",
-    "ts-loader": "3.2.0",
-    "typescript": "2.6.2",
-    "uglifyjs-webpack-plugin": "1.1.4",
-    "webpack": "3.10.0"
-  }
+    "name": "startup_boilerplate",
+    "version": "0.0.1",
+    "description": "Startup boilerplate: frontend",
+    "author": "Oleg Smetanin <oleg@smetan.in> (https://oleg.smetan.in/)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/olegsmetanin/startup_boilerplate.git"
+    },
+    "license": "MIT",
+    "scripts": {
+        "build": "cross-env NODE_ENV=production webpack --config webpack.vendor.config.js && cross-env NODE_ENV=production webpack --config webpack.site.config.js && cross-env NODE_ENV=production webpack --config webpack.sitessr.config.js",
+        "develop": "webpack --config webpack.vendor.config.js && webpack --config webpack.site.config.js && webpack --watch --config webpack.develop.config.js",
+        "clean": "rm -r dist/*",
+        "site:analyze": "webpack-bundle-analyzer dist/sitestats.json"
+    },
+    "devDependencies": {
+        "@types/node": "8.5.2",
+        "@types/react": "16.0.31",
+        "@types/react-dom": "^16.0.3",
+        "@types/react-transition-group": "2.0.6",
+        "assets-webpack-plugin": "3.5.1",
+        "copy-webpack-plugin": "4.3.0",
+        "cross-env": "5.1.2",
+        "css-loader": "0.28.7",
+        "file-loader": "1.1.6",
+        "json-loader": "^0.5.7",
+        "lodash": "4.17.4",
+        "moment": "2.20.1",
+        "react": "16.2.0",
+        "react-dom": "16.2.0",
+        "react-router-dom": "4.2.2",
+        "static-site-generator-webpack-plugin": "^3.4.1",
+        "style-loader": "0.19.1",
+        "ts-loader": "3.2.0",
+        "typescript": "2.6.2",
+        "uglifyjs-webpack-plugin": "1.1.4",
+        "webpack": "3.10.0",
+        "webpack-bundle-analyzer": "^2.9.1"
+    }
 }
