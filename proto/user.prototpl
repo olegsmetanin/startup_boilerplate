@@ -1,0 +1,21 @@
+message RegisterUserRequest {
+  string username =1;
+  string email = 2;
+  string firstname = 3;
+  string lastname = 4;
+  string captcha = 5;
+}
+
+message RegisterUserResponse {
+  string id = 1;
+}
+
+service UserService {
+  rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse) {
+    option (google.api.http) = {
+      post: "/v1/registeruser"
+      body: "*"
+    };
+  }
+}
+

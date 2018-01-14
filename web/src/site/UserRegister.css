@@ -1,0 +1,11 @@
+.userRegisterForm {
+  /*lost-row: 1/5;*/
+  gg: 
+    columns(auto 300px auto)
+}
+
+.userRegisterFormContent {
+  gg:
+    columns(auto)
+}
+

@@ -4,57 +4,112 @@ services:
   lb:
     image: dockercloud/haproxy
     links:
-      - site
-      - api
+      - sitesvc
+      - apisvc
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 8080:80
       - 8081:8081
-      - 8082:8082
 
-  api:
-    image: olegsmetanin/alpine-inotify:3.4
+  apisvc:
+    image: olegsmetanin/alpine-inotify:0.0.1-alpine3.4
     volumes:
       - .:/go/src/github.com/olegsmetanin/startup_boilerplate
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./api.dev.sh
+    command: sh ./dev/apisvc.dev.sh
     expose:
+      - "8080"
       - "8081"
-      - "8082"
     environment:
-      - TCP_PORTS=8081,8082
+      - GO_MODE=development
+      - TCP_PORTS=8081
+      - VIRTUAL_HOST=*/rest,*/rest/*
+      - VIRTUAL_HOST_WEIGHT=1
+      - REST_PATH=/rest
+      - REST_URL=http://localhost:8080/rest
+      - SITE_URL=http://localhost:8080/
+      #- REST_URL=https://api.localhost
+      #- SITE_URL=https://localhost
+      - AUTH_FB_APPID=170056803341123
+      - AUTH_FB_APPSECRET=12bb339307097d9117263e86d3a55bfd
     depends_on:
       - "srvbuilder"
 
-  site:
-    image: olegsmetanin/alpine-inotify:3.4
+  sitesvc:
+    image: olegsmetanin/alpine-inotify:0.0.1-alpine3.4
     volumes:
       - .:/go/src/github.com/olegsmetanin/startup_boilerplate
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./site.dev.sh
+    command: sh ./dev/sitesvc.dev.sh
     expose:
       - "8080"
     environment:
-      - URL_BASE_PATH=/
+      - GO_MODE=development
+      - REST_URL=http://localhost:8080/rest
       - VIRTUAL_HOST=*
+      - RECAPTCHA_KEY=6Ld19j4UAAAAAFKgzpd1S6EmsfSkW_8dLoJS2_MQ
     depends_on:
       - "srvbuilder"
       - "webbuilder"  
 
-  srvbuilder:
-    build: srvbuilder
+  usersvc:
+    image: olegsmetanin/alpine-inotify:0.0.1-alpine3.4
     volumes:
       - .:/go/src/github.com/olegsmetanin/startup_boilerplate
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./srvbuilder.dev.sh
+    command: sh ./dev/usersvc.dev.sh
+    expose:
+      - "8081"
+    depends_on:
+      - "srvbuilder"
+      - "pg"
+
+  srvbuilder:
+    build: dev/srvbuilder
+    volumes:
+      - .:/go/src/github.com/olegsmetanin/startup_boilerplate
+    working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
+    command: sh ./dev/srvbuilder.dev.sh
+    depends_on:
+      - "webbuilder"  
 
   webbuilder:
-    build: webbuilder
+    build: dev/webbuilder
     volumes:
       - .:/go/src/github.com/olegsmetanin/startup_boilerplate
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./webbuilder.dev.sh
+    command: sh ./dev/webbuilder.dev.sh
+    environment:
+      - REST_URL=http://localhost:8080/rest
 
-# Other services
+  pg:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    # volumes:
+    #    - /data/postgres:/data/postgres
+    # ports:
+    #   - "5432:5432"
+    # networks:
+    #   - postgres
+    restart: unless-stopped
+
+  pgadmin:
+    links:
+      - pg
+    image: fenglc/pgadmin4
+    # volumes:
+    #    - /data/pgadmin:/root/.pgadmin
+    ports:
+      - "5050:5050"
+    # networks:
+    #   - postgres
+    restart: unless-stopped
+    # user: pgadmin4@pgadmin.org
+    # password: admin
+    
+  # Other services
 

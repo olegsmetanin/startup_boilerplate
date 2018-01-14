@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  usersvcupd:
+    image: dhoer/flyway
+    command: -X -url=jdbc:postgresql://pg:5432/postgres -user=postgres -password=postgres -baselineOnMigrate=true migrate
+    volumes:
+      - ./migrations/usersvc:/flyway/sql
+    links:
+      - pg
