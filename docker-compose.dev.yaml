@@ -27,12 +27,10 @@ services:
       - VIRTUAL_HOST=*/rest,*/rest/*
       - VIRTUAL_HOST_WEIGHT=1
       - REST_PATH=/rest
-      - REST_URL=http://localhost:8080/rest
-      - SITE_URL=http://localhost:8080/
-      #- REST_URL=https://api.localhost
-      #- SITE_URL=https://localhost
-      - AUTH_FB_APPID=170056803341123
-      - AUTH_FB_APPSECRET=12bb339307097d9117263e86d3a55bfd
+      - REST_URL=${REST_URL}
+      - SITE_URL=${SITE_URL}
+      - AUTH_FB_APPID=${AUTH_FB_APPID}
+      - AUTH_FB_APPSECRET=${AUTH_FB_APPSECRET}
     depends_on:
       - "srvbuilder"
 
@@ -46,12 +44,12 @@ services:
       - "8080"
     environment:
       - GO_MODE=development
-      - REST_URL=http://localhost:8080/rest
+      - REST_URL=${REST_URL}
       - VIRTUAL_HOST=*
-      - RECAPTCHA_KEY=6Ld19j4UAAAAAFKgzpd1S6EmsfSkW_8dLoJS2_MQ
+      - RECAPTCHA_KEY=${RECAPTCHA_KEY}
     depends_on:
       - "srvbuilder"
-      - "webbuilder"  
+      - "webbuilder"
 
   usersvc:
     image: olegsmetanin/alpine-inotify:0.0.1-alpine3.4
@@ -72,7 +70,7 @@ services:
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
     command: sh ./dev/srvbuilder.dev.sh
     depends_on:
-      - "webbuilder"  
+      - "webbuilder"
 
   webbuilder:
     build: dev/webbuilder
@@ -81,7 +79,7 @@ services:
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
     command: sh ./dev/webbuilder.dev.sh
     environment:
-      - REST_URL=http://localhost:8080/rest
+      - REST_URL=${REST_URL}
 
   pg:
     image: postgres
@@ -110,6 +108,6 @@ services:
     restart: unless-stopped
     # user: pgadmin4@pgadmin.org
     # password: admin
-    
+
   # Other services
 

@@ -3,6 +3,7 @@ Startup boilerplate: React, Golang, Kubernetes
 
 ```
 docker-compose -f docker-compose.dev.yaml up pg pgadmin
+# In parallel
 docker-compose -f docker-compose.dev.yaml -f docker-compose.dev.upd.yaml up usersvcupd
 
 docker-compose -f docker-compose.dev.yaml up
