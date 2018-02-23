@@ -7,9 +7,13 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import * as Style from './UserRegister.css';
+
+
 
 import * as Recaptcha from 'react-recaptcha';
+
+import * as Style from './UserRegister.css';
+
 
 interface UserRegisterProps {
   onSubmit: (value) => Promise<void>;
@@ -134,3 +138,4 @@ export class UserRegister extends React.Component<
     );
   }
 }
+

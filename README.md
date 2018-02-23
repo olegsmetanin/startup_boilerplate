@@ -1,6 +1,8 @@
 # startup_boilerplate
 Startup boilerplate: React, Golang, Kubernetes
 
+Create .env file from .env.example.
+
 ```
 docker-compose -f docker-compose.dev.yaml up pg pgadmin
 # In parallel
