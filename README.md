@@ -1,6 +1,11 @@
 # startup_boilerplate
 Startup boilerplate: React, Golang, Kubernetes
 
+Clone
+```
+go get -u github.com/olegsmetanin/startup_boilerplate/...
+```
+
 Create .env file from .env.example.
 
 ```
