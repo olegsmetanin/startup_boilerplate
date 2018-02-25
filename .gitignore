@@ -30,3 +30,5 @@ node_modules/
 /web/dist/*
 
 /web/src/api/*
+
+/.vscode/tasks.json

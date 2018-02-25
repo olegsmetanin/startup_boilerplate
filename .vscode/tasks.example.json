@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+      {
+          "label": "Upload files to development server",
+          "type": "shell",
+          "command": "rsync -avr --exclude='vendor/' --exclude='web/node_modules/' --exclude='.git/' --exclude='tags' . user@server:/folder/ && rsync -avr --include='/web/src/api/***' --include='/srv/proto/***' --include='*/' --exclude='/**' user@server:/folder/ ."
+      }
+  ]
+}
