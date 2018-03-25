@@ -2,9 +2,15 @@
   "version": "2.0.0",
   "tasks": [
       {
-          "label": "Upload files to development server",
+          "label": "Upload Files",
           "type": "shell",
-          "command": "rsync -avr --exclude='vendor/' --exclude='web/node_modules' --exclude='web/src/api/' --exclude='web/dist/' --exclude='srv/proto/' --exclude='.git/' --exclude='tags' . user@server:/folder/ && rsync -avr --include='/web' --include='/web/dist/***' --include='/web/src/' --include='web/src/api/***' --include='/srv' --include='/srv/proto/***' --exclude='*' user@server:/folder/ ."
-      }
-  ]
+          "command": "rsync -avr --exclude='vendor/' --exclude='web/node_modules/' --exclude='web/src/api/' --exclude='web/dist/' --exclude='mobile/node_modules/' --exclude='srv/proto/' --exclude='proto/' --include='all.prototpl' --exclude='.git/' --exclude='tags' . user@server:/folder/ && rsync -avr --include='web' --include='web/dist/***' --include='web/src/' --include='web/src/api/***' --include='srv' --include='srv/proto/***' --exclude='*' user@server:/folder/ ."
+      },
+      {
+        "label": "Download vendors",
+        "type": "shell",
+        "command": "rsync -avr --include='web' --include='web/node_modules/***' --include='vendor/***' --exclude='*' user@server:/folder/ ."
+    }
+
+    ]
 }

@@ -81,6 +81,18 @@ services:
     environment:
       - REST_URL=${REST_URL}
 
+  mobilebuilder:
+    build: dev/mobilebuilder
+    volumes:
+      - .:/go/src/github.com/olegsmetanin/startup_boilerplate
+    working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
+    command: sh ./dev/mobilebuilder.dev.sh
+    environment:
+      - REST_URL=${REST_URL}
+    ports:
+      - 19000:19000
+      - 19001:19001
+
   pg:
     image: postgres
     environment:
