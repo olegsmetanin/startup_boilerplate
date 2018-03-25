@@ -10,7 +10,8 @@
     "license": "MIT",
     "scripts": {
         "build": "tcm src && cross-env NODE_ENV=production webpack --config webpack/webpack.vendor.config.js && cross-env NODE_ENV=production webpack --config webpack/webpack.site.config.js && cross-env NODE_ENV=production webpack --config webpack/webpack.app.config.js && cross-env NODE_ENV=production webpack --config webpack/webpack.sitessr.config.js",
-        "develop": "tcm src && webpack --config webpack/webpack.vendor.config.js && webpack --config webpack/webpack.site.config.js && webpack --config webpack/webpack.app.config.js && webpack --watch --config webpack/webpack.develop.config.js",
+        "vendor": "tcm src && webpack --config webpack/webpack.vendor.config.js && webpack --config webpack/webpack.site.config.js",
+        "develop": "tcm src && webpack --watch --config webpack/webpack.develop.config.js",
         "clean": "rm -rf dist/*",
         "app:analyze": "webpack-bundle-analyzer dist/appstats.json",
         "site:analyze": "webpack-bundle-analyzer dist/sitestats.json"
