@@ -2,6 +2,12 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net"
+	"net/http"
+	"os"
+	"strings"
+
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	apisvc "github.com/olegsmetanin/startup_boilerplate/srv/apisvc"
 	proto "github.com/olegsmetanin/startup_boilerplate/srv/proto"
@@ -11,11 +17,6 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/metadata"
-	"log"
-	"net"
-	"net/http"
-	"os"
-	"strings"
 )
 
 const grpcport = 8081

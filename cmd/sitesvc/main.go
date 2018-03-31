@@ -1,14 +1,17 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	sitesvc "github.com/olegsmetanin/startup_boilerplate/srv/sitesvc"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
+	sitesvc "github.com/olegsmetanin/startup_boilerplate/srv/sitesvc"
 )
 
 func main() {
 	log.Println("SiteService started")
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
 	r := mux.NewRouter()
 
 	fileServer := http.FileServer(http.Dir("./web/dist/public"))

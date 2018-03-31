@@ -195,8 +195,8 @@ const sitessr = (options) => Object.assign({}, commonConfig, {
       locals: {
         node_env,
         env: process.env,
-        vendormeta: options.vendormeta,
-        sitemeta: options.sitemeta,
+        //vendormeta: options.vendormeta,
+        //sitemeta: options.sitemeta,
       }
     }),
     new ExtractTextPlugin(node_production ? 'sitessr_[hash].css' : 'sitessr.css')

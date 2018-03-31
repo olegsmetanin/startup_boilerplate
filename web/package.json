@@ -10,8 +10,8 @@
     "license": "MIT",
     "scripts": {
         "build": "tcm src && cross-env NODE_ENV=production webpack --config webpack/webpack.vendor.config.js && cross-env NODE_ENV=production webpack --config webpack/webpack.site.config.js && cross-env NODE_ENV=production webpack --config webpack/webpack.app.config.js && cross-env NODE_ENV=production webpack --config webpack/webpack.sitessr.config.js",
-        "vendor": "tcm src && webpack --config webpack/webpack.vendor.config.js && webpack --config webpack/webpack.site.config.js",
-        "develop": "tcm src && webpack --watch --config webpack/webpack.develop.config.js",
+        "vendor": "tcm src && webpack --config webpack/webpack.vendor.config.js",
+        "develop": "tcm src && webpack --config webpack/webpack.vendor.config.js && webpack --watch --config webpack/webpack.develop.config.js",
         "clean": "rm -rf dist/*",
         "app:analyze": "webpack-bundle-analyzer dist/appstats.json",
         "site:analyze": "webpack-bundle-analyzer dist/sitestats.json"
@@ -55,6 +55,7 @@
         "typescript": "2.6.2",
         "typings-for-css-modules-loader": "1.7.0",
         "uglifyjs-webpack-plugin": "1.1.4",
+        "wait-on": "2.1.0",
         "webpack": "3.10.0",
         "webpack-bundle-analyzer": "2.9.1",
         "webpack-node-externals": "1.6.0"

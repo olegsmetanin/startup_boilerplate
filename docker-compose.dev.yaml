@@ -31,8 +31,6 @@ services:
       - SITE_URL=${SITE_URL}
       - AUTH_FB_APPID=${AUTH_FB_APPID}
       - AUTH_FB_APPSECRET=${AUTH_FB_APPSECRET}
-    depends_on:
-      - "srvbuilder"
 
   sitesvc:
     image: olegsmetanin/alpine-inotify:0.0.1-alpine3.4
@@ -47,9 +45,6 @@ services:
       - REST_URL=${REST_URL}
       - VIRTUAL_HOST=*
       - RECAPTCHA_KEY=${RECAPTCHA_KEY}
-    depends_on:
-      - "srvbuilder"
-      - "webbuilder"
 
   usersvc:
     image: olegsmetanin/alpine-inotify:0.0.1-alpine3.4
@@ -59,25 +54,13 @@ services:
     command: sh ./dev/usersvc.dev.sh
     expose:
       - "8081"
-    depends_on:
-      - "srvbuilder"
-      - "pg"
 
-  srvbuilder:
-    build: dev/srvbuilder
+  builder:
+    build: dev/builder
     volumes:
       - .:/go/src/github.com/olegsmetanin/startup_boilerplate
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./dev/srvbuilder.dev.sh
-    depends_on:
-      - "webbuilder"
-
-  webbuilder:
-    build: dev/webbuilder
-    volumes:
-      - .:/go/src/github.com/olegsmetanin/startup_boilerplate
-    working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./dev/webbuilder.dev.sh
+    command: sh ./dev/builder.dev.sh
     environment:
       - REST_URL=${REST_URL}
 
