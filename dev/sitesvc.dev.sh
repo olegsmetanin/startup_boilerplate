@@ -1,11 +1,15 @@
 #!/bin/sh
 
-inotifywait -m ./bin -e create |
-    while read path action file; do
-        # echo "The file '$file' appeared in directory '$path' via '$action'" 
-        if [ $file = "sitesvc" ] && [ $action = "CREATE" ]
-        then
-            jobs -p | xargs kill &>/dev/null
-            (sleep 1; echo "Restart ./bin/sitesvc"; ./bin/sitesvc) &
-        fi
-    done
+SVC=./bin/sitesvc
+
+while [ ! -f $SVC ]; do sleep 1; done
+
+while true; do
+  while [ ! -f $SVC ] || [ ! -f ./web/dist/index.ssr.html ] || [ ! -f ./web/dist/sitemeta.json ] || [ ! -f ./web/dist/appmeta.json ]; do sleep 1; done
+  $SVC &
+  PID=$!
+  inotifywait -e CLOSE_NOWRITE,CLOSE $SVC &>/dev/null
+  echo "Restarting $SVC"
+  kill $PID
+  sleep 1
+done

@@ -55,12 +55,21 @@ services:
     expose:
       - "8081"
 
-  builder:
-    build: dev/builder
+  srvbuilder:
+    build: dev/srvbuilder
     volumes:
       - .:/go/src/github.com/olegsmetanin/startup_boilerplate
     working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
-    command: sh ./dev/builder.dev.sh
+    command: sh ./dev/srvbuilder.dev.sh
+    environment:
+      - REST_URL=${REST_URL}
+
+  webbuilder:
+    build: dev/webbuilder
+    volumes:
+      - .:/go/src/github.com/olegsmetanin/startup_boilerplate
+    working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
+    command: sh ./dev/webbuilder.dev.sh
     environment:
       - REST_URL=${REST_URL}
 

@@ -1,11 +1,14 @@
 #!/bin/sh
 
-inotifywait -m ./bin -e create |
-    while read path action file; do
-        # echo "The file '$file' appeared in directory '$path' via '$action'" 
-        if [ $file = "usersvc" ] && [ $action = "CREATE" ]
-        then
-            jobs -p | xargs kill &>/dev/null
-            (sleep 1; echo "Restart ./bin/usersvc"; ./bin/usersvc) &
-        fi
-    done
+SVC=./bin/usersvc
+
+while [ ! -f $SVC ]; do sleep 1; done
+
+while true; do
+  $SVC &
+  PID=$!
+  inotifywait -e CLOSE_NOWRITE,CLOSE $SVC &>/dev/null
+  echo "Restarting $SVC"
+  kill $PID
+  sleep 1
+done

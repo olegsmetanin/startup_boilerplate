@@ -9,13 +9,9 @@ assembleproto='echo "Assemble proto" && cat ./proto/all.prototpl | sed -e "/#PRI
 
 runprotoc='echo "Rebuild proto" && protoc --plugin=protoc-gen-go=${GOPATH}/bin/protoc-gen-go -I /usr/local/include -I $GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis -I ./proto/ --go_out=plugins=grpc:./srv/proto --grpc-gateway_out=logtostderr=true:./srv/proto proto/private.proto &&  protoc -I /usr/local/include -I $GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis -I ./proto/ --swagger_out=logtostderr=true:./proto proto/public.proto && java -jar /tmp/swagger-codegen-cli.jar generate -i ./proto/public.swagger.json -l typescript-fetch -o ./web/src/api'
 
-watchweb='(echo "Watch web" && cd web && npm i && npm run clean && npm run develop)'
-
 eval $assembleproto
 
 eval $runprotoc
-
-eval $watchweb &
 
 dep init
 dep ensure -update
