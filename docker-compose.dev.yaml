@@ -55,6 +55,15 @@ services:
     expose:
       - "8081"
 
+  ssrsvc:
+    build: dev/webbuilder
+    volumes:
+      - .:/go/src/github.com/olegsmetanin/startup_boilerplate
+    working_dir: /go/src/github.com/olegsmetanin/startup_boilerplate
+    command: sh ./dev/ssrsvc.dev.sh
+    expose:
+      - "8080"
+
   srvbuilder:
     build: dev/srvbuilder
     volumes:

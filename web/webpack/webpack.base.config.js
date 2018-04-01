@@ -203,9 +203,67 @@ const sitessr = (options) => Object.assign({}, commonConfig, {
   )
 })
 
+const ssrsvc = (options) => Object.assign({}, {
+  entry: {
+    site: './src/ssrsvc/index.ts'
+  },
+  output: {
+    filename: 'ssrsvc.js',
+    path: path.resolve(__dirname, '../dist'),
+    libraryTarget: 'commonjs'
+  },
+  target: 'node',
+  //externals: [nodeExternals()],
+  plugins: [].concat(
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: `'production'`
+      }
+    }),
+    node_production ? [
+    ] : [
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'disabled',
+        generateStatsFile: true,
+        statsFilename: '../dist/ssrsvcstats.json'
+      })
+    ]
+  ),
+  module: {
+    loaders: [{
+        test: /\.tsx?$/,
+        loader: `ts-loader`
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
+        use: [
+          'file-loader',
+        ]
+      },
+      {
+        test: /\.json$/,
+        use: [
+          'json-loader'
+        ]
+      }
+    ]
+  },
+
+  resolve: {
+    modules: [
+      path.join(__dirname, '../src'),
+      'node_modules'
+    ],
+    extensions: ['.ts', '.tsx', '.js'],
+    mainFields: ['browser', 'main', 'module'],
+  }
+
+})
+
 module.exports = {
   vendor,
   site,
   app,
-  sitessr
+  sitessr,
+  ssrsvc
 }

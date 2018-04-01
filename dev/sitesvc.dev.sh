@@ -9,7 +9,7 @@ while true; do
   $SVC &
   PID=$!
   inotifywait -e CLOSE_NOWRITE,CLOSE $SVC &>/dev/null
-  echo "Restarting $SVC"
   kill $PID
   sleep 1
+  echo "Restarting $SVC"
 done

@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-RUN apk add --no-cache bash nodejs git
+RUN apk add --no-cache bash nodejs git inotify-tools
 
 ENV SHELL bash
 
