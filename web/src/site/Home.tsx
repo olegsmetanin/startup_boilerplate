@@ -5,10 +5,9 @@ import {
 import * as Recaptcha from 'react-recaptcha';
 
 import { sysConfig } from '../common/sysconfig'
-import * as Styles from './Home.css'
 import styled from 'styled-components'
 
-console.log('!!! Styles:', Styles.qwe)
+// console.log('!!! Styles:', Styles.qwe)
 
 const Title = styled.h1`
   font-size: 1.5em;

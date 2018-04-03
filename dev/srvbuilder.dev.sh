@@ -21,7 +21,7 @@ chokidar 'proto/*.prototpl' -c "$assembleproto" &
 chokidar 'proto/*.proto' -c "$runprotoc" &
 
 # Waiting for frontend
-while [ ! -f ./web/dist/index.ssr.html ]; do sleep 1; done
+while [ ! -f ./web/dist/index.site.html ]; do sleep 1; done
 
 chokidar 'cmd/apisvc/*.go' 'srv/apisvc/**/*.go' 'srv/common/**/*.go' 'srv/proto/*.go' --initial -c 'echo "Rebuild APIService" && CGO_ENABLED=0 go build --ldflags "$GOLDFLAGS" -o ./bin/apisvc ./cmd/apisvc' &
 

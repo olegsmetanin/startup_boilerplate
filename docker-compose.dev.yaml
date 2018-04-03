@@ -6,6 +6,8 @@ services:
     links:
       - sitesvc
       - apisvc
+      - staticsvc
+      - ssrsvc
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
@@ -41,9 +43,9 @@ services:
     expose:
       - "8080"
     environment:
+      - VIRTUAL_HOST=*
       - GO_MODE=development
       - REST_URL=${REST_URL}
-      - VIRTUAL_HOST=*
       - RECAPTCHA_KEY=${RECAPTCHA_KEY}
 
   usersvc:
@@ -63,6 +65,21 @@ services:
     command: sh ./dev/ssrsvc.dev.sh
     expose:
       - "8080"
+    environment:
+      - STATIC_CONTEXT=${STATIC_CONTEXT}
+
+  staticsvc:
+    image: nginx:1.13.10-alpine
+    volumes:
+      - ./web/nginx.tmpl:/etc/nginx/nginx.tmpl
+      - ./web:/usr/share/nginx/html
+    command: sh -c "envsubst < /etc/nginx/nginx.tmpl > /etc/nginx/nginx.conf && cat /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    expose:
+      - "80"
+    environment:
+      - VIRTUAL_HOST=*/static,*/static/*
+      - VIRTUAL_HOST_WEIGHT=1
+      - STATIC_CONTEXT=${STATIC_CONTEXT}
 
   srvbuilder:
     build: dev/srvbuilder
@@ -81,6 +98,8 @@ services:
     command: sh ./dev/webbuilder.dev.sh
     environment:
       - REST_URL=${REST_URL}
+      - RECAPTCHA_KEY=${RECAPTCHA_KEY}
+      - STATIC_CONTEXT=${STATIC_CONTEXT}
 
   mobilebuilder:
     build: dev/mobilebuilder

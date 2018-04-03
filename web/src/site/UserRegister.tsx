@@ -12,9 +12,6 @@ import {
 
 import * as Recaptcha from 'react-recaptcha';
 
-import * as Style from './UserRegister.css';
-
-
 interface UserRegisterProps {
   onSubmit: (value) => Promise<void>;
 }
@@ -83,10 +80,10 @@ export class UserRegister extends React.Component<
 
   render() {
     return (
-      <div className={Style.userRegisterForm}>
+      <div className={'qwe'}>
         <div>
         </div>
-        <div className={Style.userRegisterFormContent}>
+        <div className={'qwe'}>
           <div>
             User name:
             <input
