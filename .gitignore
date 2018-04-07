@@ -32,3 +32,10 @@ node_modules/
 /web/src/api/*
 
 /.vscode/tasks.json
+
+
+Gopkg.lock
+Gopkg.toml
+
+mobile/yarn.lock
+# web/package-lock.json

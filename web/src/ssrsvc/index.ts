@@ -1,13 +1,16 @@
 import * as http from "http"
 import sticky = require('sticky-cluster')
 import * as express from 'express'
+import {ssr} from './ssr'
 
 sticky(cb => {
   const app = express()
 
   app.use((req, res, next) => {
+    const state = {}
+    const html = ssr(state)
     // After successful login, redirect back to the intended page
-    res.status(200).send('OK!!');
+    res.status(200).send(html);
   });
 
   const server = http.createServer(app)

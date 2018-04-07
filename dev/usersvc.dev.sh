@@ -7,8 +7,7 @@ while [ ! -f $SVC ]; do sleep 1; done
 while true; do
   $SVC &
   PID=$!
-  inotifywait -e CLOSE_NOWRITE,CLOSE $SVC &>/dev/null
+  filewatch -t 3 -filenames $SVC
   kill $PID
-  sleep 1
   echo "Restarting $SVC"
 done

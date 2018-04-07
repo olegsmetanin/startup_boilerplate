@@ -3,9 +3,10 @@ package main
 import (
 	"log"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 
 	"github.com/gorilla/mux"
-	sitesvc "github.com/olegsmetanin/startup_boilerplate/srv/sitesvc"
 )
 
 func main() {
@@ -14,22 +15,34 @@ func main() {
 
 	r := mux.NewRouter()
 
-	fileServer := http.FileServer(http.Dir("./web/dist/public"))
+	//fileServer := http.FileServer(http.Dir("./web/dist/public"))
+
+	target := "http://ssrsvc:8080"
+	remote, err := url.Parse(target)
+	if err != nil {
+		panic(err)
+	}
+
+	proxy := httputil.NewSingleHostReverseProxy(remote)
+	// proxyHandler := sitesvc.SSRHandler(proxy)
 
 	r.PathPrefix("/").Handler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/" {
-			var isAuthenticated = true
-			authCookie, err := r.Cookie("auth")
+		proxy.ServeHTTP(w, r)
 
-			log.Println("Cookie:", authCookie)
-			if err != nil {
-				isAuthenticated = false
-			}
+		// if r.URL.Path == "/" {
+		// 	var isAuthenticated = true
+		// 	authCookie, err := r.Cookie("auth")
 
-			w.Write([]byte(sitesvc.RenderHTML(isAuthenticated)))
-		} else {
-			fileServer.ServeHTTP(w, r)
-		}
+		// 	log.Println("Cookie:", authCookie)
+		// 	if err != nil {
+		// 		isAuthenticated = false
+		// 	}
+
+		// 	w.Write([]byte(sitesvc.RenderHTML(isAuthenticated)))
+		// } else {
+		// 	fileServer.ServeHTTP(w, r)
+		// }
+
 	}))
 
 	// Bind to a port and pass our router in

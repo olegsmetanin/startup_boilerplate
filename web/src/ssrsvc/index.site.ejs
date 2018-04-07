@@ -6,29 +6,29 @@
           <title>Startup boilerplate</title>
           <meta name="description" content="">
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-          <link rel="manifest" href="<%= htmlWebpackPlugin.options.publicPath %>site.webmanifest">
-          <link rel="apple-touch-icon" href="<%= htmlWebpackPlugin.options.publicPath %>icon.png">
+          <link rel="manifest" href="/static/site.webmanifest">
+          <link rel="apple-touch-icon" href="/static/icon.png">
           <!-- Place favicon.ico in the root directory -->
-          <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.publicPath %>normalize.css">
+          <link rel="stylesheet" href="/static/normalize.css">
 
-          <%= htmlWebpackPlugin.options.style %>
+          <%= style %>
 
       </head>
       <body>
           <!--[if lte IE 9]>
               <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
           <![endif]-->
-          <div id="root"><%= htmlWebpackPlugin.options.html %></div>
-          <script type="text/javascript" src="<%= htmlWebpackPlugin.options.publicPath %><%= htmlWebpackPlugin.options.vendor %>"></script>
+          <div id="root"><%= html %></div>
+          <script type="text/javascript" src="/static/vendor.js"></script>
 
           <script>
             var appConfig = {
-              restURL: '<%= htmlWebpackPlugin.options.restURL %>',
-              recaptchaKey: '<%= htmlWebpackPlugin.options.recaptchaKey %>',
+              restURL: 'http://localhost:8080/rest',
+              recaptchaKey: '6Lf_SkQUAAAAAMuzRAjYYNnUpCGOJFnnEsy93SQg',
             }
           </script>
 
-          <script type="text/javascript" src="<%= htmlWebpackPlugin.files.js %>"></script>
+          <script type="text/javascript" src="/static/site.js"></script>
 
           <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
           <script>

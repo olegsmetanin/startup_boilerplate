@@ -34,8 +34,13 @@ const commonConfig = {
         use: [
           'json-loader'
         ]
+      },
+      {
+        test: /\.ejs$/,
+        use: [
+          'ejs-loader'
+        ]
       }
-
     ]
   },
 
@@ -101,6 +106,22 @@ const site = (options) => Object.assign({}, commonConfig, {
       filename: '../index.site.html',
       template: 'src/site/index.site.htmltpl',
       publicPath: process.env.STATIC_CONTEXT || '/',
+      style: '',
+      html: '',
+
+      restURL: process.env.REST_URL,
+      recaptchaKey: process.env.RECAPTCHA_KEY,
+
+      inject: false,
+    }),
+    new HtmlWebpackPlugin({
+      title: 'My App',
+      vendor: options.vendor,
+      filename: '../../src/ssrsvc/index.site.ejs',
+      template: 'src/site/index.site.htmltpl',
+      publicPath: process.env.STATIC_CONTEXT || '/',
+      style: '<%= style %>',
+      html: '<%= html %>',
 
       restURL: process.env.REST_URL,
       recaptchaKey: process.env.RECAPTCHA_KEY,
@@ -196,6 +217,12 @@ const ssrsvc = (options) => Object.assign({}, {
         test: /\.json$/,
         use: [
           'json-loader'
+        ]
+      },
+      {
+        test: /\.ejs$/,
+        use: [
+          'ejs-loader'
         ]
       }
     ]
