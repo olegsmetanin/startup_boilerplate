@@ -38,4 +38,4 @@ Gopkg.lock
 Gopkg.toml
 
 mobile/yarn.lock
-# web/package-lock.json
+web/package-lock.json
