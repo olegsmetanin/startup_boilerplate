@@ -5,7 +5,7 @@ export SHELL=bash
 
 #eval $watchweb &
 
-echo "Watch web"
+  echo "$(date '+%Y/%m/%d %H:%M:%S') WebBuilder: started"
 cd web
 npm i
 npm run clean

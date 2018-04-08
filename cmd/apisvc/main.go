@@ -63,7 +63,7 @@ func AuthInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServe
 
 func main() {
 
-	log.Println("APIServce started")
+	log.Println("APIService: started")
 
 	grpcServer := grpc.NewServer(grpc.UnaryInterceptor(AuthInterceptor))
 

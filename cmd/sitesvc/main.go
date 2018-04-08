@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	log.Println("SiteService started")
+	log.Println("SiteService: started")
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	r := mux.NewRouter()

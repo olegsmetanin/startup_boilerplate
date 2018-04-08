@@ -10,5 +10,5 @@ while true; do
   PID=$!
   filewatch -t 3 -filenames $SVC
   kill $PID
-  echo "Restarting $SVC"
+  echo "$(date '+%Y/%m/%d %H:%M:%S') SiteService: killed"
 done

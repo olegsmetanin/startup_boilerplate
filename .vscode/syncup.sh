@@ -2,9 +2,10 @@
 
 echo "Sync up"
 
-rsync -avr \
+rsync -avr --checksum \
 --exclude='vendor/' \
 --exclude='web/node_modules/' \
+--exclude='web/dist/' \
 --exclude='mobile/node_modules/' \
 --exclude='bin/' \
 --exclude='.git/' \

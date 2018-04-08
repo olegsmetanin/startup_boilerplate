@@ -8,6 +8,6 @@ while true; do
   PID=$!
   echo "PID: $PID"
   filewatch -t 3 -filenames $SVC
-  echo "Restarting $SVC"
   kill $PID
+  echo "$(date '+%Y/%m/%d %H:%M:%S') SSRService: killed"
 done

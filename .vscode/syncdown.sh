@@ -2,7 +2,7 @@
 
 echo "Sync down"
 
-rsync -avr \
+rsync -avr --checksum \
 --exclude='vendor/' \
 --exclude='web/node_modules/' \
 --exclude='mobile/node_modules/' \

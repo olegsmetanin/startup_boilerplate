@@ -79,3 +79,7 @@ RUN go get -u github.com/golang/dep/cmd/dep
 RUN npm install -g ts-protoc-gen
 
 RUN npm install -g chokidar-cli
+
+ENV FILEWATCH_VERSION 0.0.4
+
+RUN wget https://github.com/olegsmetanin/filewatch/releases/download/$FILEWATCH_VERSION/filewatch-linux.tar.gz -O - | tar -xz -C /usr/local/bin

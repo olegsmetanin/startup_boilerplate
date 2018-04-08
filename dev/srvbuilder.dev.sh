@@ -16,18 +16,19 @@ eval $runprotoc
 dep init
 dep ensure -update
 
-chokidar 'proto/*.prototpl' -c "$assembleproto" &
+filewatch -t 2 -filenames 'proto/*.prototpl' --command='$assembleproto' &
 
-chokidar 'proto/*.proto' -c "$runprotoc" &
+filewatch -t 2 -filenames 'proto/*.proto' --command='$runprotoc' &
 
 # Waiting for frontend
 while [ ! -f ./web/dist/index.site.html ]; do sleep 1; done
 
-chokidar 'cmd/apisvc/*.go' 'srv/apisvc/**/*.go' 'srv/common/**/*.go' 'srv/proto/*.go' --initial -c 'echo "Rebuild APIService" && CGO_ENABLED=0 go build --ldflags "$GOLDFLAGS" -o ./bin/apisvc ./cmd/apisvc' &
+filewatch -t 2 -filenames 'cmd/apisvc/*.go,srv/apisvc/**/*.go,srv/common/**/*.go,srv/proto/*.go' --initial --command='echo "APIService: build" && CGO_ENABLED=0 go build --ldflags "$GOLDFLAGS" -o ./bin/apisvc ./cmd/apisvc && echo "APIService: build completed"' &
+#chokidar 'cmd/apisvc/*.go' 'srv/apisvc/**/*.go' 'srv/common/**/*.go' 'srv/proto/*.go' --initial -c 'echo "APIService: build" && CGO_ENABLED=0 go build --ldflags "$GOLDFLAGS" -o ./bin/apisvc ./cmd/apisvc && echo "APIService: build completed"' &
 
-chokidar 'cmd/sitesvc/*.go' 'srv/sitesvc/**/*.go' 'srv/common/**/*.go' 'srv/proto/*.go' --initial -c 'echo "Rebuild SiteService" && CGO_ENABLED=0 go build --ldflags "$GOLDFLAGS" -o ./bin/sitesvc ./cmd/sitesvc' &
+filewatch -t 2 -filenames 'cmd/sitesvc/*.go,srv/sitesvc/**/*.go,srv/common/**/*.go,srv/proto/*.go' --initial --command='echo "SiteService: build" && CGO_ENABLED=0 go build --ldflags "$GOLDFLAGS" -o ./bin/sitesvc ./cmd/sitesvc && echo "SiteService: build completed"' &
 
-chokidar 'cmd/usersvc/*.go' 'srv/usersvc/**/*.go' 'srv/common/**/*.go' 'srv/proto/*.go' --initial -c 'echo "Rebuild UserService" && CGO_ENABLED=0 go build --ldflags "$GOLDFLAGS" -o ./bin/usersvc ./cmd/usersvc' &
+filewatch -t 2 -filenames 'cmd/usersvc/*.go,srv/usersvc/**/*.go,srv/common/**/*.go,srv/proto/*.go' --initial --command='echo "UserService: build" && CGO_ENABLED=0 go build --ldflags "$GOLDFLAGS" -o ./bin/usersvc ./cmd/usersvc && echo "UserService: build completed"' &
 
 wait
 
